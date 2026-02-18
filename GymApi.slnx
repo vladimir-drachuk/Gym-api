@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DataLayer/DataLayer.csproj" />
+  <Project Path="GymApi/GymApi.csproj" />
+</Solution>
