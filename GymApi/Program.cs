@@ -1,11 +1,13 @@
 using DataLayer;
 using DataLayer.Interfaces;
 using DataLayer.Repositories;
+using FluentValidation;
 using GymApi.Extensions;
 using GymApi.Interfaces;
 using GymApi.Options;
 using GymApi.Services;
 using GymApi.Utilites;
+using GymApi.Validators;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -17,6 +19,7 @@ builder.Services.Configure<JwtTokenOptions>(
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateWorkoutValidator>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<GymDbContext>(options => options.UseSqlServer(connectionString));

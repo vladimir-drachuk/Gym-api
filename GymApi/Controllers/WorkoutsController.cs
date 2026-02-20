@@ -1,15 +1,20 @@
-﻿using GymApi.Model;
+﻿using FluentValidation;
+using GymApi.Model;
 using GymApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace GymApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class WorkoutsController(WorkoutService workoutService) : ControllerBase
+    public class WorkoutsController(
+        WorkoutService workoutService,
+        IValidator<CreateWorkout> createWorkoutValidator) : ControllerBase
     {
         private readonly WorkoutService _workoutService = workoutService;
+        private readonly IValidator<CreateWorkout> _createWorkoutValidator = createWorkoutValidator;
 
         [HttpGet]
         [Authorize]
@@ -51,8 +56,9 @@ namespace GymApi.Controllers
         [ProducesResponseType(400)]
         public async Task<ActionResult<Workout[]?>> CreateWorkout([FromBody] CreateWorkout createWorkout)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var validationResult = await _createWorkoutValidator.ValidateAsync(createWorkout);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.Errors.Select(e => new { field = e.PropertyName, message = e.ErrorMessage }));
 
             try
             {

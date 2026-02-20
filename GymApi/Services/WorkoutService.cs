@@ -66,7 +66,7 @@ namespace GymApi.Services
                 UserId = createWorkout.UserId,
                 WorkoutPlanId = createWorkout.WorkoutPlanId,
                 Description = createWorkout.Description,
-                Date = createWorkout.Date
+                Date = createWorkout.Date ?? DateTime.Now,
             };
             var createdWorkout = await _workoutRepository.AddAsync(workoutEntity);
 
