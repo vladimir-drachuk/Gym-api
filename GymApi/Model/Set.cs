@@ -1,4 +1,6 @@
-﻿namespace GymApi.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GymApi.Model
 {
     public class Set
     {

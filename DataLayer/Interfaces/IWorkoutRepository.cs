@@ -2,10 +2,10 @@ using DataLayer.Entities;
 
 namespace DataLayer.Interfaces
 {
-    public interface IWorkoutRepository : IBaseRepository<Workout>
+    public interface IWorkoutRepository : IBaseRepository<WorkoutEntity>
     {
-        public Task<IEnumerable<Workout>> GetAllByUserIdAsync(Guid userId);
-        public Task<IEnumerable<Workout>> GetAllByWorkoutPlanIdAsync(Guid workoutPlanId);
-        
+        Task<IEnumerable<WorkoutEntity>> GetAllByUserIdAsync(Guid userId);
+        Task<IEnumerable<WorkoutEntity>> GetAllByWorkoutPlanIdAsync(Guid workoutPlanId);
+        Task<Guid?> GetUserIdByWorkoutId(Guid workoutId);
     }
 }

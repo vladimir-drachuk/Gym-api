@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataLayer.Configurations
 {
-    public class WorkoutExerciseConfiguration : IEntityTypeConfiguration<WorkoutExercise>
+    public class WorkoutExerciseConfiguration : IEntityTypeConfiguration<WorkoutExerciseEntity>
     {
-        public void Configure(EntityTypeBuilder<WorkoutExercise> builder)
+        public void Configure(EntityTypeBuilder<WorkoutExerciseEntity> builder)
         {
             builder.ToTable("WorkoutExercises");
 
@@ -23,8 +23,9 @@ namespace DataLayer.Configurations
             builder.Property(x => x.WorkoutId).IsRequired();
             builder.Property(x => x.ExerciseId).IsRequired();
             builder.Property(x => x.Description).IsRequired();
+            builder.Property(x => x.Order).IsRequired();
 
-            builder.HasMany<Set>()
+            builder.HasMany<SetEntity>()
                 .WithOne()
                 .HasForeignKey(s => s.WorkoutExerciseId)
                 .OnDelete(DeleteBehavior.Cascade);

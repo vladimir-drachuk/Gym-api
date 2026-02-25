@@ -2,8 +2,8 @@
 
 namespace DataLayer.Interfaces
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IUserRepository : IBaseRepository<UserEntity>
     {
-        Task<User?> GetByEmailAsync(string email);
+        Task<UserEntity?> GetByEmailAsync(string email);
     }
 }

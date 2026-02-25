@@ -1,10 +1,11 @@
-﻿using DataLayer.Entities;
+using DataLayer.Entities;
 using DataLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DataLayer.Repositories
 {
-    public class BaseRepository<TEntity>(GymDbContext dbContext) : IBaseRepository<TEntity> where TEntity : BaseModel
+    public abstract class BaseRepository<TEntity>(GymDbContext dbContext) : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         protected readonly GymDbContext _dbContext = dbContext;
         protected readonly DbSet<TEntity> _dbSet = dbContext.Set<TEntity>();
@@ -55,6 +56,11 @@ namespace DataLayer.Repositories
                 _dbSet.Remove(entity);
                 await _dbContext.SaveChangesAsync();
             }
+        }
+
+        public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.AnyAsync(predicate);
         }
     }
 }

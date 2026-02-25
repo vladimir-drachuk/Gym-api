@@ -16,13 +16,15 @@ namespace DataLayer
             modelBuilder.ApplyConfiguration(new WorkoutConfiguration());
             modelBuilder.ApplyConfiguration(new WorkoutExerciseConfiguration());
             modelBuilder.ApplyConfiguration(new WorkoutPlanConfiguration());
+            modelBuilder.ApplyConfiguration(new TrainerClientConfiguration());
         }
 
-        public DbSet<Exercise> Exercises { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Set> Sets { get; set; }
-        public DbSet<Workout> Workouts { get; set; }
-        public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
-        public DbSet<WorkoutPlan> WorkoutPlans { get; set; }
+        public DbSet<ExerciseEntity> Exercises { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<SetEntity> Sets { get; set; }
+        public DbSet<WorkoutEntity> Workouts { get; set; }
+        public DbSet<WorkoutExerciseEntity> WorkoutExercises { get; set; }
+        public DbSet<WorkoutPlanEntity> WorkoutPlans { get; set; }
+        public DbSet<TrainerClientEntity> TrainerClients { get; set; }
     }
 }

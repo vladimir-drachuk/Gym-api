@@ -1,9 +1,6 @@
-﻿using System;
-
-
 namespace DataLayer.Entities;
 
-public class Exercise : BaseModel
+public class ExerciseEntity : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
 

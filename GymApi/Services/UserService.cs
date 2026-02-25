@@ -1,4 +1,5 @@
-﻿using DataLayer.Interfaces;
+﻿using DataLayer.Entities;
+using DataLayer.Interfaces;
 using GymApi.Interfaces;
 using GymApi.Model;
 using GymApi.Utilites;
@@ -19,7 +20,7 @@ namespace GymApi.Services
         {
             var hashedPassword = _passwordHasher.Generate(user.Password);
 
-            var entity = new DataLayer.Entities.User
+            var entity = new UserEntity
             {
                 Id = user.Id,
                 Name = user.Name,
@@ -61,7 +62,7 @@ namespace GymApi.Services
             {
                 return _tokenProvider.GenerateToken(user);
             }
-            
+
             return null;
         }
     }

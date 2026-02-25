@@ -4,18 +4,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.Repositories
 {
-    public class WorkoutRepository(GymDbContext dbContext) : BaseRepository<Workout>(dbContext), IWorkoutRepository
+    public class WorkoutRepository(GymDbContext dbContext) : BaseRepository<WorkoutEntity>(dbContext), IWorkoutRepository
     {
-        private new readonly DbSet<Workout> _dbSet = dbContext.Set<Workout>();
+        private new readonly DbSet<WorkoutEntity> _dbSet = dbContext.Set<WorkoutEntity>();
 
-        public async Task<IEnumerable<Workout>> GetAllByUserIdAsync(Guid userId)
+        public async Task<IEnumerable<WorkoutEntity>> GetAllByUserIdAsync(Guid userId)
         {
             return await _dbSet.Where(w => w.UserId == userId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Workout>> GetAllByWorkoutPlanIdAsync(Guid workoutPlanId)
+        public async Task<IEnumerable<WorkoutEntity>> GetAllByWorkoutPlanIdAsync(Guid workoutPlanId)
         {
             return await _dbSet.Where(w => w.WorkoutPlanId == workoutPlanId).ToListAsync();
+        }
+
+        public async Task<Guid?> GetUserIdByWorkoutId(Guid workoutId)
+        {
+            return await _dbSet
+                .Where(w => w.Id == workoutId)
+                .Select(w => w.UserId)
+                .FirstOrDefaultAsync();
         }
     }
 }

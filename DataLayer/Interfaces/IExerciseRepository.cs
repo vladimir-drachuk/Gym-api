@@ -2,5 +2,5 @@
 
 namespace DataLayer.Interfaces
 {
-    public interface IExerciseRepository : IBaseRepository<Exercise> { }
+    public interface IExerciseRepository : IBaseRepository<ExerciseEntity> { }
 }

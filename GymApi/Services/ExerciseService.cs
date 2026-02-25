@@ -1,4 +1,5 @@
-﻿using DataLayer.Interfaces;
+﻿using DataLayer.Entities;
+using DataLayer.Interfaces;
 using GymApi.Model;
 
 namespace GymApi.Services
@@ -23,10 +24,10 @@ namespace GymApi.Services
 
         public async Task<Exercise> CreateExercise(Exercise exercise)
         {
-            var entity = new DataLayer.Entities.Exercise
+            var entity = new ExerciseEntity
             {
                 Name = exercise.Name,
-                Description = exercise.Description
+                Description = exercise.Description,
             };
             var createdEntity = await _exerciseRepository.AddAsync(entity);
 
@@ -35,11 +36,11 @@ namespace GymApi.Services
 
         public async Task<Exercise> UpdateExercise(Exercise exercise)
         {
-            var entity = new DataLayer.Entities.Exercise
+            var entity = new ExerciseEntity
             {
                 Id = exercise.Id,
                 Name = exercise.Name,
-                Description = exercise.Description
+                Description = exercise.Description,
             };
             var updatedEntity = await _exerciseRepository.UpdateAsync(entity);
 
@@ -51,7 +52,7 @@ namespace GymApi.Services
             await _exerciseRepository.DeleteAsync(id);
         }
 
-        private static Exercise MapToExercise(DataLayer.Entities.Exercise e) => new()
+        private static Exercise MapToExercise(ExerciseEntity e) => new()
         {
             Id = e.Id,
             Name = e.Name,

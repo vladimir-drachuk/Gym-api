@@ -15,9 +15,9 @@ namespace GymApi.Utilites
         public string GenerateToken(User user)
         {
             Claim[] claims = [
-                new("userId", user.Id.ToString()),
-                new("email", user.Email),
-                new("role", user.Role.ToString())
+                new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new(JwtRegisteredClaimNames.Email, user.Email),
+                new(ClaimTypes.Role, user.Role.ToString())
             ];
 
             var signingCredentials = new SigningCredentials(

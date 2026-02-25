@@ -7,7 +7,7 @@ namespace GymApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(Roles = "Admin,Trainer")]
     public class WorkoutPlansController(WorkoutPlanService workoutPlanService) : ControllerBase
     {
         private readonly WorkoutPlanService _workoutPlanService = workoutPlanService;

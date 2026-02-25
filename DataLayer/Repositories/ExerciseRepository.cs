@@ -3,5 +3,5 @@ using DataLayer.Interfaces;
 
 namespace DataLayer.Repositories
 {
-    public class ExerciseRepository(GymDbContext dbContext) : BaseRepository<Exercise>(dbContext), IExerciseRepository { }
+    public class ExerciseRepository(GymDbContext dbContext) : BaseRepository<ExerciseEntity>(dbContext), IExerciseRepository { }
 }

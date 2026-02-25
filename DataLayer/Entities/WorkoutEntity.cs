@@ -1,12 +1,13 @@
-namespace GymApi.Model
+namespace DataLayer.Entities
 {
-    public class Workout
+    public class WorkoutEntity : BaseEntity
     {
-        public Guid Id { get; set; }
         public Guid UserId { get; set; }
+
         public Guid? WorkoutPlanId { get; set; }
+
         public string Description { get; set; } = string.Empty;
+
         public DateTime Date { get; set; } = DateTime.Now;
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

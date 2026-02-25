@@ -1,3 +1,4 @@
+using DataLayer.Entities;
 using DataLayer.Interfaces;
 using GymApi.Model;
 
@@ -23,7 +24,7 @@ namespace GymApi.Services
 
         public async Task<WorkoutPlan> Create(CreateWorkoutPlan createWorkoutPlan)
         {
-            var entity = new DataLayer.Entities.WorkoutPlan
+            var entity = new WorkoutPlanEntity
             {
                 UserId = createWorkoutPlan.UserId,
                 Description = createWorkoutPlan.Description,
@@ -52,7 +53,7 @@ namespace GymApi.Services
             await _workoutPlanRepository.DeleteAsync(id);
         }
 
-        private static WorkoutPlan MapToWorkoutPlan(DataLayer.Entities.WorkoutPlan w) => new()
+        private static WorkoutPlan MapToWorkoutPlan(WorkoutPlanEntity w) => new()
         {
             Id = w.Id,
             UserId = w.UserId,

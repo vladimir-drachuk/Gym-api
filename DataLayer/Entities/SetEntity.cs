@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace DataLayer.Entities
 {
-    public class Set : BaseModel
+    public class SetEntity : BaseEntity
     {
         public Guid WorkoutExerciseId { get; set; }
 
@@ -15,5 +11,7 @@ namespace DataLayer.Entities
         public int[]? Cheating { get; set; }
 
         public string Description { get; set; } = string.Empty;
+
+        public int Order { get; set; }
     }
 }

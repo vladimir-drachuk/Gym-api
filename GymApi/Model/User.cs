@@ -1,3 +1,5 @@
+using DataLayer.Enums;
+
 namespace GymApi.Model
 {
     public class User
@@ -10,7 +12,7 @@ namespace GymApi.Model
         
         public string Password { get; set; } = string.Empty;
         
-        public byte Role { get; set; } = 0;
+        public UserRole Role { get; set; } = UserRole.User;
         
         public DateTime CreatedAt { get; set; } = DateTime.Now;
     }

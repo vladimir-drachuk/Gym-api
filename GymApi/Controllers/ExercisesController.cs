@@ -7,6 +7,7 @@ namespace GymApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin,Trainer")]
     public class ExercisesController(ExerciseService exerciseService) : ControllerBase
     {
         private readonly ExerciseService _exerciseService = exerciseService;
@@ -37,7 +38,6 @@ namespace GymApi.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [ProducesResponseType(typeof(Exercise), 201)]
         [ProducesResponseType(400)]
         public async Task<ActionResult<Exercise>> Create([FromBody] Exercise exercise)
@@ -52,7 +52,6 @@ namespace GymApi.Controllers
         }
 
         [HttpPut]
-        [Authorize]
         [ProducesResponseType(typeof(Exercise), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]

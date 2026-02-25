@@ -1,8 +1,9 @@
 ﻿using DataLayer.Entities;
+using System.Linq.Expressions;
 
 namespace DataLayer.Interfaces
 {
-    public interface IBaseRepository<TEntity> where TEntity : BaseModel
+    public interface IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         Task<IEnumerable<TEntity>> GetAllAsync();
 
@@ -17,5 +18,7 @@ namespace DataLayer.Interfaces
         Task<TEntity> UpdateAsync(TEntity entity);
 
         Task DeleteAsync(Guid id);
+
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataLayer.Configurations
 {
-    public class SetConfiguration : IEntityTypeConfiguration<Set>
+    public class SetConfiguration : IEntityTypeConfiguration<SetEntity>
     {
-        public void Configure(EntityTypeBuilder<Set> builder)
+        public void Configure(EntityTypeBuilder<SetEntity> builder)
         {
             builder.ToTable("Sets");
 
@@ -23,6 +23,7 @@ namespace DataLayer.Configurations
             builder.Property(x => x.WorkoutExerciseId).IsRequired();
             builder.Property(x => x.Amount).IsRequired();
             builder.Property(x => x.Description).IsRequired();
+            builder.Property(x => x.Order).IsRequired();
         }
     }
 }
