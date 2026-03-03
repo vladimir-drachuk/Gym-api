@@ -30,5 +30,14 @@ namespace DataLayer.Repositories
             _dbSet.UpdateRange(sets);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<SetEntity>> GetByWorkoutExerciseIdsAsync(IEnumerable<Guid> workoutExerciseIds)
+        {
+            var idList = workoutExerciseIds.ToList();
+            return await _dbSet
+                .Where(s => idList.Contains(s.WorkoutExerciseId))
+                .OrderBy(s => s.Order)
+                .ToListAsync();
+        }
     }
 }

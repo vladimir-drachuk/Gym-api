@@ -25,15 +25,7 @@ namespace DataLayer.Configurations
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Role);
 
-            builder.HasMany<WorkoutPlanEntity>()
-                .WithOne()
-                .HasForeignKey(wp => wp.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasMany<WorkoutEntity>()
-                .WithOne()
-                .HasForeignKey(w => w.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+            // Relationships are configured from the dependent (child) entity side
         }
     }
 }

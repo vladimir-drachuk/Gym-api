@@ -23,10 +23,7 @@ namespace DataLayer.Configurations
             builder.Property(x => x.Name).IsRequired();
             builder.Property(x => x.Description);
 
-            builder.HasMany<WorkoutExerciseEntity>()
-                .WithOne()
-                .HasForeignKey(we => we.ExerciseId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Exercise -> WorkoutExercises relationship is configured in WorkoutExerciseConfiguration
         }
     }
 }

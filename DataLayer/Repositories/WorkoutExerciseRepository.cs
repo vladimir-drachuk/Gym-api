@@ -70,5 +70,60 @@ namespace DataLayer.Repositories
                 .Where(we => we.Id == exerciseId)
                 .ExecuteUpdateAsync(s => s.SetProperty(we => we.Order, newOrder));
         }
+
+        public async Task<bool> AnyActualAsync(Guid workoutId)
+        {
+            return await _dbSet.AnyAsync(we => we.WorkoutId == workoutId && we.Date != null);
+        }
+
+        public async Task<WorkoutExerciseEntity?> FindActualByPlannedIdAsync(Guid plannedWorkoutExerciseId)
+        {
+            return await _dbSet
+                .FirstOrDefaultAsync(we => we.PlannedWorkoutExerciseId == plannedWorkoutExerciseId);
+        }
+
+        public async Task DeletePlannedByWorkoutIdAsync(Guid workoutId)
+        {
+            var plannedExercises = await _dbSet
+                .Where(we => we.WorkoutId == workoutId && we.Date == null)
+                .ToListAsync();
+
+            if (plannedExercises.Any())
+            {
+                _dbSet.RemoveRange(plannedExercises);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteActualByWorkoutIdAsync(Guid workoutId)
+        {
+            var actualExercises = await _dbSet
+                .Where(we => we.WorkoutId == workoutId && we.Date != null)
+                .ToListAsync();
+
+            if (actualExercises.Any())
+            {
+                _dbSet.RemoveRange(actualExercises);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<IEnumerable<WorkoutExerciseEntity>> GetByWorkoutIdAsync(Guid workoutId)
+        {
+            return await _dbSet
+                .Where(we => we.WorkoutId == workoutId)
+                .OrderBy(we => we.Order)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<WorkoutExerciseEntity>> GetByWorkoutIdWithDetailsAsync(Guid workoutId)
+        {
+            return await _dbSet
+                .Where(we => we.WorkoutId == workoutId)
+                .Include(we => we.Exercise)
+                .Include(we => we.Sets.OrderBy(s => s.Order))
+                .OrderBy(we => we.Order)
+                .ToListAsync();
+        }
     }
 }

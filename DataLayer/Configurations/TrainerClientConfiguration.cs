@@ -27,13 +27,13 @@ namespace DataLayer.Configurations
                 .IsRequired()
                 .HasDefaultValueSql("GETDATE()");
 
-            builder.HasOne<UserEntity>()
-                .WithMany()
+            builder.HasOne(x => x.Trainer)
+                .WithMany(u => u.TrainerAssignments)
                 .HasForeignKey(x => x.TrainerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne<UserEntity>()
-                .WithMany()
+            builder.HasOne(x => x.Client)
+                .WithMany(u => u.ClientAssignments)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

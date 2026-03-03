@@ -21,14 +21,29 @@ namespace DataLayer.Configurations
                 .HasDefaultValueSql("GETDATE()");
 
             builder.Property(x => x.WorkoutId).IsRequired();
+            builder.Property(x => x.PlannedWorkoutExerciseId);
             builder.Property(x => x.ExerciseId).IsRequired();
             builder.Property(x => x.Description).IsRequired();
             builder.Property(x => x.Order).IsRequired();
+            builder.Property(x => x.Date);
 
-            builder.HasMany<SetEntity>()
-                .WithOne()
-                .HasForeignKey(s => s.WorkoutExerciseId)
+            builder.HasOne(x => x.Workout)
+                .WithMany(w => w.WorkoutExercises)
+                .HasForeignKey(x => x.WorkoutId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(x => x.Exercise)
+                .WithMany(e => e.WorkoutExercises)
+                .HasForeignKey(x => x.ExerciseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Self-referential: actual exercise references its planned counterpart
+            builder.HasOne(x => x.PlannedWorkoutExercise)
+                .WithMany()
+                .HasForeignKey(x => x.PlannedWorkoutExerciseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // WorkoutExercise -> Sets relationship is configured in SetConfiguration
         }
     }
 }

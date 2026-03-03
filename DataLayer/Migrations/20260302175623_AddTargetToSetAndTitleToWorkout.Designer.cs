@@ -4,6 +4,7 @@ using DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260302175623_AddTargetToSetAndTitleToWorkout")]
+    partial class AddTargetToSetAndTitleToWorkout
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -272,125 +275,74 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("DataLayer.Entities.SetEntity", b =>
                 {
-                    b.HasOne("DataLayer.Entities.SetEntity", "PlannedSet")
+                    b.HasOne("DataLayer.Entities.SetEntity", null)
                         .WithMany()
                         .HasForeignKey("PlannedSetId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("DataLayer.Entities.WorkoutExerciseEntity", "WorkoutExercise")
-                        .WithMany("Sets")
+                    b.HasOne("DataLayer.Entities.WorkoutExerciseEntity", null)
+                        .WithMany()
                         .HasForeignKey("WorkoutExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("PlannedSet");
-
-                    b.Navigation("WorkoutExercise");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.TrainerClientEntity", b =>
                 {
-                    b.HasOne("DataLayer.Entities.UserEntity", "Trainer")
-                        .WithMany("TrainerAssignments")
+                    b.HasOne("DataLayer.Entities.UserEntity", null)
+                        .WithMany()
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DataLayer.Entities.UserEntity", "Client")
-                        .WithMany("ClientAssignments")
+                    b.HasOne("DataLayer.Entities.UserEntity", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Trainer");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.WorkoutEntity", b =>
                 {
-                    b.HasOne("DataLayer.Entities.UserEntity", "User")
-                        .WithMany("Workouts")
+                    b.HasOne("DataLayer.Entities.UserEntity", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("DataLayer.Entities.WorkoutPlanEntity", "WorkoutPlan")
-                        .WithMany("Workouts")
+                    b.HasOne("DataLayer.Entities.WorkoutPlanEntity", null)
+                        .WithMany()
                         .HasForeignKey("WorkoutPlanId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("User");
-
-                    b.Navigation("WorkoutPlan");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.WorkoutExerciseEntity", b =>
                 {
-                    b.HasOne("DataLayer.Entities.ExerciseEntity", "Exercise")
-                        .WithMany("WorkoutExercises")
+                    b.HasOne("DataLayer.Entities.ExerciseEntity", null)
+                        .WithMany()
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataLayer.Entities.WorkoutExerciseEntity", "PlannedWorkoutExercise")
+                    b.HasOne("DataLayer.Entities.WorkoutExerciseEntity", null)
                         .WithMany()
                         .HasForeignKey("PlannedWorkoutExerciseId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("DataLayer.Entities.WorkoutEntity", "Workout")
-                        .WithMany("WorkoutExercises")
+                    b.HasOne("DataLayer.Entities.WorkoutEntity", null)
+                        .WithMany()
                         .HasForeignKey("WorkoutId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Exercise");
-
-                    b.Navigation("PlannedWorkoutExercise");
-
-                    b.Navigation("Workout");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.WorkoutPlanEntity", b =>
                 {
-                    b.HasOne("DataLayer.Entities.UserEntity", "User")
-                        .WithMany("WorkoutPlans")
+                    b.HasOne("DataLayer.Entities.UserEntity", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DataLayer.Entities.ExerciseEntity", b =>
-                {
-                    b.Navigation("WorkoutExercises");
-                });
-
-            modelBuilder.Entity("DataLayer.Entities.UserEntity", b =>
-                {
-                    b.Navigation("ClientAssignments");
-
-                    b.Navigation("TrainerAssignments");
-
-                    b.Navigation("WorkoutPlans");
-
-                    b.Navigation("Workouts");
-                });
-
-            modelBuilder.Entity("DataLayer.Entities.WorkoutEntity", b =>
-                {
-                    b.Navigation("WorkoutExercises");
-                });
-
-            modelBuilder.Entity("DataLayer.Entities.WorkoutExerciseEntity", b =>
-                {
-                    b.Navigation("Sets");
-                });
-
-            modelBuilder.Entity("DataLayer.Entities.WorkoutPlanEntity", b =>
-                {
-                    b.Navigation("Workouts");
                 });
 #pragma warning restore 612, 618
         }

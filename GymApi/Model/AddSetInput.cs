@@ -1,24 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace GymApi.Model
 {
     /// <summary>
-    /// Represents a set within a workout exercise
+    /// Represents input data for adding a set to a workout exercise
     /// </summary>
-    public class Set
+    public class AddSetInput
     {
-        /// <summary>
-        /// Gets or sets the set identifier
-        /// </summary>
-        [Required(ErrorMessage = "Id is required")]
-        public Guid Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the workout exercise identifier
-        /// </summary>
-        [Required(ErrorMessage = "WorkoutExerciseId is required")]
-        public Guid WorkoutExerciseId { get; set; }
-
         /// <summary>
         /// Gets or sets the target value for the set
         /// </summary>
@@ -29,7 +17,7 @@ namespace GymApi.Model
         /// </summary>
         [Range(1, int.MaxValue, ErrorMessage = "Amount must be positive")]
         public int Amount { get; set; } = 1;
-        
+
         /// <summary>
         /// Gets or sets the time duration in seconds
         /// </summary>
@@ -44,20 +32,16 @@ namespace GymApi.Model
         /// Gets or sets the set description
         /// </summary>
         [MaxLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
-        public string Description { get; set; } = string.Empty;
-        
-        /// <summary>
-        /// Gets or sets the creation timestamp
-        /// </summary>
-        public DateTime CreatedAt { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the execution date (null for planned sets)
+        /// Gets or sets the execution date
         /// </summary>
-        public DateTime? Date { get; set; }
+        [Required(ErrorMessage = "Date is required for actual sets")]
+        public DateTime Date { get; set; }
 
         /// <summary>
-        /// Gets or sets the planned set identifier (for linking actual sets to planned sets)
+        /// Gets or sets the planned set identifier (for linking to planned sets)
         /// </summary>
         public Guid? PlannedSetId { get; set; }
     }

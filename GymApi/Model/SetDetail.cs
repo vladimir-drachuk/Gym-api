@@ -1,22 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
-
 namespace GymApi.Model
 {
     /// <summary>
-    /// Represents a set within a workout exercise
+    /// Represents detailed information about a set
     /// </summary>
-    public class Set
+    public class SetDetail
     {
         /// <summary>
         /// Gets or sets the set identifier
         /// </summary>
-        [Required(ErrorMessage = "Id is required")]
         public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets the workout exercise identifier
         /// </summary>
-        [Required(ErrorMessage = "WorkoutExerciseId is required")]
         public Guid WorkoutExerciseId { get; set; }
 
         /// <summary>
@@ -27,9 +23,8 @@ namespace GymApi.Model
         /// <summary>
         /// Gets or sets the amount/reps for the set
         /// </summary>
-        [Range(1, int.MaxValue, ErrorMessage = "Amount must be positive")]
-        public int Amount { get; set; } = 1;
-        
+        public int Amount { get; set; }
+
         /// <summary>
         /// Gets or sets the time duration in seconds
         /// </summary>
@@ -43,13 +38,12 @@ namespace GymApi.Model
         /// <summary>
         /// Gets or sets the set description
         /// </summary>
-        [MaxLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
         public string Description { get; set; } = string.Empty;
-        
+
         /// <summary>
-        /// Gets or sets the creation timestamp
+        /// Gets or sets the set order within the exercise
         /// </summary>
-        public DateTime CreatedAt { get; set; }
+        public int Order { get; set; }
 
         /// <summary>
         /// Gets or sets the execution date (null for planned sets)

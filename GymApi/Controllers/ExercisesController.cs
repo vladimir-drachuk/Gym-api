@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GymApi.Controllers
 {
+    /// <summary>
+    /// Controller for managing exercises
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "Admin,Trainer")]
@@ -12,6 +15,10 @@ namespace GymApi.Controllers
     {
         private readonly ExerciseService _exerciseService = exerciseService;
 
+        /// <summary>
+        /// Gets all exercises
+        /// </summary>
+        /// <returns>List of all exercises</returns>
         [HttpGet]
         [Authorize]
         [ProducesResponseType(typeof(Exercise[]), 200)]
@@ -21,6 +28,11 @@ namespace GymApi.Controllers
             return Ok(exercises);
         }
 
+        /// <summary>
+        /// Gets an exercise by its identifier
+        /// </summary>
+        /// <param name="id">The exercise identifier</param>
+        /// <returns>The exercise if found, otherwise 404</returns>
         [HttpGet("{id:guid}")]
         [Authorize]
         [ProducesResponseType(typeof(Exercise), 200)]
@@ -37,6 +49,11 @@ namespace GymApi.Controllers
             return Ok(exercise);
         }
 
+        /// <summary>
+        /// Creates a new exercise
+        /// </summary>
+        /// <param name="exercise">The exercise data to create</param>
+        /// <returns>The created exercise</returns>
         [HttpPost]
         [ProducesResponseType(typeof(Exercise), 201)]
         [ProducesResponseType(400)]
@@ -51,6 +68,11 @@ namespace GymApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdExercise.Id }, createdExercise);
         }
 
+        /// <summary>
+        /// Updates an existing exercise
+        /// </summary>
+        /// <param name="exercise">The exercise data to update</param>
+        /// <returns>The updated exercise</returns>
         [HttpPut]
         [ProducesResponseType(typeof(Exercise), 200)]
         [ProducesResponseType(400)]
@@ -66,6 +88,11 @@ namespace GymApi.Controllers
             return Ok(updatedExercise);
         }
 
+        /// <summary>
+        /// Deletes an exercise by its identifier
+        /// </summary>
+        /// <param name="id">The exercise identifier</param>
+        /// <returns>No content if successful</returns>
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

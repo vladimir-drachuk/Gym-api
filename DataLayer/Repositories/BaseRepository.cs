@@ -58,6 +58,12 @@ namespace DataLayer.Repositories
             }
         }
 
+        public virtual async Task DeleteAsync(TEntity entity)
+        {
+            _dbSet.Remove(entity);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public virtual async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.AnyAsync(predicate);

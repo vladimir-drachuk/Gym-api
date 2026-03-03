@@ -6,6 +6,9 @@ using GymApi.Utilites;
 
 namespace GymApi.Services
 {
+    /// <summary>
+    /// Service for managing users and authentication
+    /// </summary>
     public class UserService(
         IUserRepository userRepository,
         IPasswordHasher passwordHasher,
@@ -16,6 +19,11 @@ namespace GymApi.Services
         private readonly IPasswordHasher _passwordHasher = passwordHasher;
         private readonly TokenProvider _tokenProvider = tokenProvider;
 
+        /// <summary>
+        /// Creates a new user with hashed password
+        /// </summary>
+        /// <param name="user">The user data to create</param>
+        /// <returns>The created user</returns>
         public async Task<User> CreateUser(User user)
         {
             var hashedPassword = _passwordHasher.Generate(user.Password);
@@ -40,6 +48,11 @@ namespace GymApi.Services
             };
         }
 
+        /// <summary>
+        /// Gets a user by email address
+        /// </summary>
+        /// <param name="email">The user email address</param>
+        /// <returns>The user if found, otherwise null</returns>
         public async Task<User?> GetUserByEmail(string email)
         {
             var entity = await _userRepository.GetByEmailAsync(email);
@@ -54,6 +67,12 @@ namespace GymApi.Services
             };
         }
 
+        /// <summary>
+        /// Verifies user credentials and generates a token if valid
+        /// </summary>
+        /// <param name="user">The user to verify</param>
+        /// <param name="password">The password to verify</param>
+        /// <returns>JWT token if credentials are valid, otherwise null</returns>
         public string? VerifyUser(User user, string password)
         {
             var isUserValid = _passwordHasher.Verify(password, user.Password);

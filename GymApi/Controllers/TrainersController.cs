@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymApi.Controllers
 {
+    /// <summary>
+    /// Controller for managing trainer-client relationships
+    /// </summary>
     [ApiController]
     [Authorize(Roles = "Admin,Trainer")]
     [Route("api/[controller]")]
@@ -13,6 +16,11 @@ namespace GymApi.Controllers
     {
         private readonly TrainerService _trainerService = trainerService;
 
+        /// <summary>
+        /// Gets all clients assigned to a trainer
+        /// </summary>
+        /// <param name="trainerId">The trainer identifier</param>
+        /// <returns>List of trainer-client relationships</returns>
         [HttpGet("{trainerId:guid}/clients")]
         [ProducesResponseType(typeof(TrainerClientEntity[]), 200)]
         [ProducesResponseType(403)]
@@ -27,6 +35,12 @@ namespace GymApi.Controllers
             return Ok(clients);
         }
 
+        /// <summary>
+        /// Assigns a client to a trainer
+        /// </summary>
+        /// <param name="trainerId">The trainer identifier</param>
+        /// <param name="userId">The client user identifier</param>
+        /// <returns>No content if successful</returns>
         [HttpPost("{trainerId:guid}/assign/{userId:guid}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]
@@ -49,6 +63,12 @@ namespace GymApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Unassigns a client from a trainer
+        /// </summary>
+        /// <param name="trainerId">The trainer identifier</param>
+        /// <param name="userId">The client user identifier</param>
+        /// <returns>No content if successful, 404 if not found</returns>
         [HttpDelete("{trainerId:guid}/clients/{userId:guid}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(403)]

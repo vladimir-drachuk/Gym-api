@@ -4,12 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymApi.Controllers
 {
+    /// <summary>
+    /// Controller for user authentication
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController(UserService userService) : ControllerBase
     {
         private readonly UserService _userService = userService;
 
+        /// <summary>
+        /// Registers a new user and returns a JWT token
+        /// </summary>
+        /// <param name="user">The user registration data</param>
+        /// <returns>JWT token if registration successful</returns>
         [HttpPost("register")]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(400)]
@@ -50,6 +58,11 @@ namespace GymApi.Controllers
             return Ok(token);
         }
 
+        /// <summary>
+        /// Logs in a user and returns a JWT token
+        /// </summary>
+        /// <param name="login">The user login credentials</param>
+        /// <returns>JWT token if login successful</returns>
         [HttpPost("login")]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(400)]
